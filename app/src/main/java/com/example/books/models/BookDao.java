@@ -44,4 +44,8 @@ public interface BookDao {
     @Query("select *, author.name as authorName" +
             " from book, author where book.authorID == author.id and book.bookId == :id")
     Observable<BookAndAuthor> getBookAndAuthor(long id);
+
+    @Query("select *, author.name as authorName" +
+            " from book, author where book.authorID == author.id and book.bookId == :id")
+    BookAndAuthor getBookAndAuthorTest(long id);
 }

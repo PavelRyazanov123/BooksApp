@@ -50,7 +50,6 @@ public class LibraryRepo {
     }
 
     public void loadBooks(Callback<Boolean> callback) {
-        Log.e(TAG, "loadBooks: " );
         compositeDisposable.add(itBookstoreAPI
                 .getNewBooks()
                 .doOnSubscribe(d -> callback.callback(true))
