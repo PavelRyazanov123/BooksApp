@@ -59,23 +59,15 @@ public class DetailsFragment extends Fragment {
         doneButton = view.findViewById(R.id.detailed_edit_done);
 
         editButton.setOnClickListener(view1 -> {
-            Animation animation = AnimationUtils.loadAnimation(getActivity(), R.anim.fade_out);
-            editButton.startAnimation(animation);
-            editButton.setVisibility(View.GONE);
-            animation = AnimationUtils.loadAnimation(getActivity(), R.anim.fade_in);
-            doneButton.startAnimation(animation);
-            doneButton.setVisibility(View.VISIBLE);
+           fadeOutAnimation(editButton);
+           fadeInAnimation(doneButton);
             description.setEnabled(true);
             description.requestFocus();
         });
 
         doneButton.setOnClickListener(view1 -> {
-            Animation animation = AnimationUtils.loadAnimation(getActivity(), R.anim.fade_out);
-            doneButton.startAnimation(animation);
-            doneButton.setVisibility(View.GONE);
-            animation = AnimationUtils.loadAnimation(getActivity(), R.anim.fade_in);
-            editButton.startAnimation(animation);
-            editButton.setVisibility(View.VISIBLE);
+            fadeOutAnimation(doneButton);
+            fadeInAnimation(editButton);
             description.setEnabled(false);
             detailsViewModel.updateDescription(description.getText().toString());
         });
@@ -106,4 +98,15 @@ public class DetailsFragment extends Fragment {
         group.setVisibility(View.VISIBLE);
         editButton.setVisibility(View.VISIBLE);
     };
+
+    private void fadeOutAnimation(View v){
+        Animation animation = AnimationUtils.loadAnimation(getActivity(), R.anim.fade_out);
+        v.startAnimation(animation);
+        v.setVisibility(View.GONE);
+    }
+    private void fadeInAnimation(View v){
+        Animation animation = AnimationUtils.loadAnimation(getActivity(), R.anim.fade_in);
+        v.startAnimation(animation);
+        v.setVisibility(View.VISIBLE);
+    }
 }
