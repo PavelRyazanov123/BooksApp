@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -79,15 +80,19 @@ public class DetailsFragment extends Fragment {
             detailsViewModel.updateDescription(description.getText().toString());
         });
 
-
         detailsViewModel = ViewModelProviders.of(this).get(DetailsViewModel.class);
         detailsViewModel.getBookLiveData().observe(getViewLifecycleOwner(), bookObserver);
+        detailsViewModel.getEventLiveData().observe(getViewLifecycleOwner(), eventObserver);
+
         if (getArguments() != null) {
             bookID = getArguments().getLong(BOOK_ID_KEY);
             detailsViewModel.getBook(bookID);
         }
         return view;
     }
+
+    private Observer<String> eventObserver = s ->
+            Toast.makeText(getActivity(), s, Toast.LENGTH_SHORT).show();
 
     private Observer<BookAndAuthor> bookObserver = bookAndAuthor -> {
         ratingValue.setText(bookAndAuthor.getBook().getRating());
@@ -99,5 +104,6 @@ public class DetailsFragment extends Fragment {
         description.setText(bookAndAuthor.getBook().getDesc());
         Picasso.get().load(bookAndAuthor.getBook().getImage()).into(icon);
         group.setVisibility(View.VISIBLE);
+        editButton.setVisibility(View.VISIBLE);
     };
 }
